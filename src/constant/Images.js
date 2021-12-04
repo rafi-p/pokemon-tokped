@@ -7,4 +7,7 @@ export default {
 	pokemonLogo: require('../assets/images/pokemonLogo.png').default,
 	arrowPageLeft: require('../assets/images/arrowPageLeft.svg').default,
 	arrowPageRight: require('../assets/images/arrowPageRight.svg').default,
+	x: require('../assets/images/x.svg').default,
+	successImg: require('../assets/images/successImg.png').default,
+	failedImg: require('../assets/images/failedImg.png').default,
 };

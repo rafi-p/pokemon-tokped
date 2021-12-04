@@ -17,7 +17,10 @@ const NavbarComponent = props => {
 
   return (
     <Navbar>
-      <div className='logo-container'>
+      <div
+        className='logo-container'
+        onClick={() => {history.push('/')}}
+      >
         <img src={Images.pokemonLogo} alt="" />
       </div>
       <div className="container-btn">

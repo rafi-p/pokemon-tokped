@@ -65,6 +65,39 @@ export default createGlobalStyle`
     border-spacing: 0;
   }
 
+  .ReactModal__Overlay {
+    background-color: rgba(0, 0, 0, .8) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // padding: 40px;
+    height: fit-content;
+    height: 100%;
+    min-height: -webkit-fill-available;
+    position: fixed !important;
+    z-index: 102;
+  }
+
+
+  .ReactModal__Content {
+    position: unset !important;
+    inset: unset !important;
+    border: none !important;
+    background: unset !important;
+    overflow: auto !important;
+    border-radius: unset !important;
+    outline: none !important;
+    padding: unset !important;
+    height: fit-content;
+
+
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+  }
+
   /* http://meyerweb.com/eric/tools/css/reset/
   v2.0 | 20110126
   License: none (public domain)

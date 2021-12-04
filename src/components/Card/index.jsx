@@ -11,7 +11,9 @@ const CardComponent = props => {
   const history = useHistory()
 
   return (
-    <CardWrapper>
+    <CardWrapper
+      onClick={() => {history.push('/detail')}}
+    >
       <Text
         styling={
           FontStyles.heading2
