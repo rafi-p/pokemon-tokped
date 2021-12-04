@@ -11,6 +11,7 @@ const Navbar = styled.div`
     position: relative;
     margin-bottom: 80px;
     position: fixed;
+    z-index: 1;
 
     @media ${Sizes.sm} {
         height: 75px;

@@ -23,7 +23,7 @@ import * as pokemonListAction from '../../store/pokemonList/actions';
 
 const Detail = props => {
   const dispatch = useDispatch();
-  const [isFailed, setIsFailed] = useState(false)
+  const [isFailed, setIsFailed] = useState(true)
   const [topNav, setTopNav] = useState(0)
   const [openModal, setOpenModal] = useState(false)
   const [dataMain, setDataMain] = useState([])

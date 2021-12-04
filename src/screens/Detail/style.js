@@ -29,8 +29,19 @@ const DetailCard = styled.div`
     height: calc(100vh - 410px);
     position: relative;
 
+    @media ${Sizes.sm} {
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        width: calc(100vw - 100px);
+    }
+
     & > * {
         margin-right: 20px;
+
+        @media ${Sizes.sm} {
+            margin-right: unset;
+        }
 
         &:last-child {
             margin-right: 0px;
@@ -56,8 +67,15 @@ const DetailCard = styled.div`
 
 const ContentCardDetail = styled.div`
     width: 100%;
+    @media ${Sizes.sm} {
+        margin-right: unset;
+        margin-bottom: 45px;
+    }
     .top-nav {
         display: flex;
+        @media ${Sizes.sm} {
+            justify-content: center;
+        }
         & > * {
             margin-right: 30px;
 
@@ -82,6 +100,9 @@ const ContentCardDetail = styled.div`
     }
 
     .info-detail {
+        @media ${Sizes.sm} {
+            text-align: center;
+        }
         & > * {
             margin-bottom: 15px;
 
@@ -96,6 +117,11 @@ const ContentCardDetail = styled.div`
         grid-template-columns: auto auto;
         grid-gap: 10px 70px;
         width: calc(100% - 100px);
+        @media ${Sizes.sm} {
+            grid-template-columns: auto;
+            justify-content: center;
+            width: 100%;
+        }
     }
 `;
 
@@ -104,6 +130,9 @@ const RowContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    @media ${Sizes.sm} {
+        width: calc(100vw - 200px);
+    }
 `;
 
 const BtnCatch = styled.div`
@@ -123,6 +152,10 @@ const BtnCatch = styled.div`
     transition: all .3s;
     &:hover {
         transform: translateX(50%) translateY(50%) scale(1.1);
+    }
+
+    @media ${Sizes.sm} {
+        right: 50%;
     }
 `;
 
@@ -144,6 +177,10 @@ const ModalInfo = styled.div`
         &:last-child {
             margin-bottom: 0px;
         }
+    }
+
+    @media ${Sizes.sm} {
+        width: calc(100vw - 100px);
     }
 
     .text-heading {
@@ -182,11 +219,19 @@ const ModalInfo = styled.div`
             width: 200px;
             position: absolute;
             left: 0;
+
+            @media ${Sizes.sm} {
+                width: 150px;
+            }
         }
+
 
         .input-text {
             width: 100%;
             margin-left: 180px;
+            @media ${Sizes.sm} {
+                margin-left: 120px;
+            }
             & > * {
                 margin-bottom: 5px;
 
