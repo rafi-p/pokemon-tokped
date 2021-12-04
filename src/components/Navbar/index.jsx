@@ -1,20 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './Navbar.scss';
 import { useHistory, useLocation } from 'react-router-dom'
 import { Images, Colors, FontStyles } from '../../constant/index';
+import { Text } from '../../components/index';
 import {
-} from '../index';
-
+  Navbar
+} from './style';
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile
+} from 'react-device-detect';
 
 const NavbarComponent = props => {
   const history = useHistory()
 
   return (
-    <div
-      className={'container'}
-    >
-      navbar
-    </div>
+    <Navbar>
+      <div className='logo-container'>
+        <img src={Images.pokemonLogo} alt="" />
+      </div>
+      <div className="container-btn">
+        <Text
+          styling={
+            isMobile
+            ?
+            FontStyles.mediumS
+            :
+            FontStyles.mediumL
+          }
+          text='My Pokemon'
+          color={ Colors.white.default }
+        />
+      </div>
+    </Navbar>
   );
 };
 

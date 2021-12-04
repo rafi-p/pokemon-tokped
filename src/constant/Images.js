@@ -4,4 +4,7 @@ export default {
 	loading: require('../assets/images/Spinner-1s-60px.svg').default,
 	back: require('../assets/images/left_long_arrow.svg').default,
 	noData: require('../assets/images/headspace.png').default,
+	pokemonLogo: require('../assets/images/pokemonLogo.png').default,
+	arrowPageLeft: require('../assets/images/arrowPageLeft.svg').default,
+	arrowPageRight: require('../assets/images/arrowPageRight.svg').default,
 };

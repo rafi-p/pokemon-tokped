@@ -1,5 +1,14 @@
-@import "./constant/Colors.scss";
-@import "./constant/Fonts.scss";
+import { createGlobalStyle } from 'styled-components';
+
+import Sizes from './Sizes';
+import Fonts from './Fonts';
+
+export default createGlobalStyle`
+  /* http://meyerweb.com/eric/tools/css/reset/
+  v2.0 | 20110126
+  License: none (public domain)
+  ==START==
+  */
 
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -30,8 +39,10 @@
 
   body {
     line-height: 1;
-    font-family: 'Manrope';
-    overflow: hidden;
+    font-family: ${Fonts.manrope};
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 100vh ;
 
   }
 
@@ -54,52 +65,13 @@
     border-spacing: 0;
   }
 
-  .main-container {
-    overflow: hidden;
-  }
+  /* http://meyerweb.com/eric/tools/css/reset/
+  v2.0 | 20110126
+  License: none (public domain)
+  ==END==
+  */
 
 
-.btn-custom {
-  color: $greenDefault;
-  border: 1px solid $greenDefault;
-  border-radius: 5px;
-  transition: opacity .3s;
-  cursor: pointer;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 10px;
-  transition: all .3s;
-  font-weight: 500;
 
-  &.disabled {
-    cursor: not-allowed;
-    opacity: .3;
-    pointer-events: none;
-    transition: all .3s;
-  }
 
-  &.red {
-      color: $red;
-      border: 1px solid $red;
-  }
-
-  &:hover {
-      opacity: .8;
-      background: $greenDefault;
-      color: $white;
-
-      &.red {
-          background: $red;
-      }
-  }
-
-  &.ml-50 {
-      margin-left: 50px;
-
-      @media screen and (max-width: 768px){
-        margin-left: 0px;
-    }
-  }
-}
+`;
