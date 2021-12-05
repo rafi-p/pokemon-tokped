@@ -29,6 +29,12 @@ const DetailCard = styled.div`
     height: 100%;;
     position: relative;
 
+    &.loading {
+        transition: all .3s;
+        background: ${Colors.red.mild} !important;
+        opacity: .1;
+    }
+
     @media ${Sizes.sm} {
         flex-direction: column;
         align-items: center;
@@ -52,8 +58,17 @@ const DetailCard = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: center;
-        img {
+
+        .container-img {
             width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img {
+                width: 100%;
+                height: auto;
+            }
         }
     }
 `;

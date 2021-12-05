@@ -7,6 +7,12 @@ const Container = styled.div`
     align-items: center;
     flex-direction: column;
 
+    &.loading {
+        transition: all .3s;
+        pointer-events: none;
+        opacity: .5;
+    }
+
     .content-wrapper {
         display: flex;
         justify-content: center;
@@ -21,10 +27,12 @@ const Container = styled.div`
 
         & > * {
             margin-bottom: 25px;
-            margin-right: 25px;
+            margin-right: 12.5px;
+            margin-left: 12.5px;
 
             @media ${Sizes.sm} {
                 margin-right: unset;
+                margin-left: unset;
             }
         }
     }
@@ -46,6 +54,11 @@ const Container = styled.div`
             transition: all .3s;
             &:hover {
                 opacity: .8;
+            }
+
+            &.disabled {
+                pointer-events: none;
+                opacity: 0.3;
             }
         }
     }

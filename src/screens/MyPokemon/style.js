@@ -21,10 +21,12 @@ const Container = styled.div`
 
         & > * {
             margin-bottom: 25px;
-            margin-right: 25px;
+            margin-right: 12.5px;
+            margin-left: 12.5px;
 
             @media ${Sizes.sm} {
                 margin-right: unset;
+                margin-left: unset;
             }
         }
     }

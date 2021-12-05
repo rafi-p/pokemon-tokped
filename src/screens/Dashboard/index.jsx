@@ -23,6 +23,8 @@ const Dashboard = props => {
     variables: { limit, offset },
   })
 
+  const tempData = Array.apply(null, Array(12)).map((el, i) => {return i})
+
   const nextPage = () => {
     setPage((prevState) => prevState + 1)
     setOffset((prevState) => prevState + limit)
@@ -33,54 +35,84 @@ const Dashboard = props => {
     setOffset((prevState) => prevState - limit)
   }
 
-  const [dataMain, setDataMain] = useState(
-    [
-      {
-        name: 'IVYSAUR',
-        counted: 0
-      },
-      {
-        name: 'Lalalal',
-        counted: 0
-      }
-    ]
-  )
-  return (
-    <Container>
-      <div className="content-wrapper">
-        {
-          !loading &&
-          data.pokemons.results.map((el, i) => {
-            return (
-              <Card
-                key={el.id}
-                name={el.name.toUpperCase()}
-                image={el.image}
-              />
-            )
-          })
-        }
-
-      </div>
-      <div className="pagination">
-        <img
-          src={ Images.arrowPageLeft }
-          alt=''
-          className={ `clicked` }
-          onClick={() => prevPage() }
-        />
-        <div>
-          {page}
+  const lastPage = () => {
+    if(!loading) {
+      return Math.ceil(data.pokemons.count / limit)
+    }
+  }
+  if(loading) {
+    return (
+      <Container
+        className={`loading`}
+      >
+        <div className="content-wrapper">
+          {
+            tempData.map((el, i) => {
+              return (
+                <Card
+                  key={i}
+                  name={''}
+                  image={''}
+                  loading={loading}
+                />
+              )
+            })
+          }
         </div>
-        <img
-          src={ Images.arrowPageRight }
-          alt=''
-          className={ `clicked` }
-          onClick={ () => nextPage()}
-        />
-      </div>
-    </Container>
-  );
+        <div className="pagination">
+          <img
+            src={ Images.arrowPageLeft }
+            alt=''
+          />
+          <div>
+            {page}
+          </div>
+          <img
+            src={ Images.arrowPageRight }
+            alt=''
+          />
+        </div>
+      </Container>
+    )
+  } else {
+    return (
+      <Container>
+        <div className="content-wrapper">
+          {
+            data.pokemons.results.map((el, i) => {
+              return (
+                <Card
+                  key={el.id}
+                  name={el.name.toUpperCase()}
+                  image={el.image}
+                  loading={loading}
+                />
+              )
+            })
+          }
+
+        </div>
+        <div className="pagination">
+          <img
+            src={ Images.arrowPageLeft }
+            alt=''
+            className={ `clicked ${page === 1 ? 'disabled' : ''}` }
+            onClick={() => prevPage() }
+          />
+          <div>
+            {page}
+          </div>
+          <img
+            src={ Images.arrowPageRight }
+            alt=''
+            className={ `clicked ${lastPage() === page ? 'disabled' : ''}`}
+            onClick={ () => nextPage()}
+          />
+        </div>
+      </Container>
+    );
+  }
+
 
 };
 

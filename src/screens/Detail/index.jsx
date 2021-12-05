@@ -82,9 +82,9 @@ const Detail = props => {
 
   useEffect(() => {
     let temp = []
-    let type = {}
+    let type = ''
     let image = {}
-    if(data && data.pokemon && Object.keys(data.pokemon).length !== 0) {
+    if(!loading) {
       image = data.pokemon.sprites
       if(topNav === 0) {
         temp = data.pokemon.stats.map((el, i) => {
@@ -96,20 +96,18 @@ const Detail = props => {
         type = data.pokemon.types.map((el) => {
           return el.type.name
         }).join(', ')
-      } else if(topNav === 1) {
+      } else {
         temp = data.pokemon.moves.map((el, i) => {
           return {
             text: el.move.name.toUpperCase(),
           }
         })
-      } else {
-        temp =[1,2]
       }
     }
     setDataMain(temp)
-    setDataType(type)
+    setDataType(loading ? '' : type)
     setDataImage(image)
-  }, [topNav, data, loading])
+  }, [topNav, loading])
 
   const topNavData = [
     {
@@ -163,177 +161,198 @@ const Detail = props => {
     })
   }
 
-  return (
-    <Container>
-      <div className="content-wrapper">
-        <DetailCard>
-          <div className="wrapper-image">
-            {
-              dataImage && Object.keys(dataImage) !== 0 &&
-              <>
-                <img src={dataImage.front_default} alt="" />
-                <img src={dataImage.back_default} alt="" />
-              </>
-            }
-
-          </div>
-          <ContentCardDetail>
-            <div className="top-nav">
-              {
-                topNavData.map((el, i) => {
-                  return (
-                    <Text
-                      key={i}
-                      styling={
-                        topNav === i
-                        ?
-                        FontStyles.boldL
-                        :
-                        FontStyles.mediumL
-                      }
-                      text={el.text}
-                      color={ Colors.black.default }
-                      className={`key ${topNav === i ? 'active' : ''}`}
-                      onClick={() => setTopNav(i)}
-                    />
-                  )
-                })
-              }
+  if(loading) {
+    return (
+      <Container>
+        <div className="content-wrapper">
+          <DetailCard
+            className='loading'
+          >
+            <div className="wrapper-image">
+              <div className="container-img">
+              </div>
+              <div className="container-img">
+              </div>
             </div>
-            <div className="info-detail">
-              <Text
-                styling={
-                  FontStyles.heading1
-                }
-                text={'IVYSAUR'}
-                color={ Colors.black.default }
-              />
-              {
-                topNav === 0 &&
-                dataType &&
-                <Row
-                  text={'TYPE'}
-                  desc={dataType}
-                  className='customText'
-                  isType={true}
-                />
-              }
-              <div className="text">
+          </DetailCard>
+        </div>
+      </Container>
+
+    )
+  } else {
+    return (
+      <Container>
+        <div className="content-wrapper">
+          <DetailCard>
+            <div className="wrapper-image">
+              <div className="container-img">
+                <img src={dataImage.front_default} alt="" />
+              </div>
+              <div className="container-img">
+                <img src={dataImage.back_default} alt="" />
+              </div>
+
+            </div>
+            <ContentCardDetail>
+              <div className="top-nav">
                 {
-                  dataMain && dataMain.map((el, i) => {
+                  topNavData.map((el, i) => {
                     return (
-                      <Row
+                      <Text
                         key={i}
-                        text={el.text ?? ''}
-                        desc={el.desc ?? ''}
+                        styling={
+                          topNav === i
+                          ?
+                          FontStyles.boldL
+                          :
+                          FontStyles.mediumL
+                        }
+                        text={el.text}
+                        color={ Colors.black.default }
+                        className={`key ${topNav === i ? 'active' : ''}`}
+                        onClick={() => setTopNav(i)}
                       />
                     )
                   })
                 }
               </div>
-            </div>
-          </ContentCardDetail>
-          <BtnCatch
-            onClick={() => setOpenModal(true)}
-          >
-            <Text
-              styling={
-                FontStyles.heading3
-              }
-              text={'CATCH'}
-              color={ Colors.white.default }
-              onClick={() => handleCatch()}
-            />
-          </BtnCatch>
-        </DetailCard>
-      </div>
-
-      <CustomModal
-        isOpen={ openModal }
-        closeModal={ () => { setOpenModal(false) } }
-      >
-        <ModalInfo
-          isFailed={isFailed}
-        >
-          <img
-            className='xIcon'
-            src={ Images.x }
-            alt=''
-            onClick={ () => { setOpenModal(false)} }
-          />
-          <Text
-            styling={
-              FontStyles.heading1
-            }
-            text={isFailed ? 'FAILED' : 'SUCCESS'}
-            color={ isFailed ? Colors.red.default : Colors.green.default }
-            className='text-heading'
-          />
-          <div className="content-wrapper">
-            <img src={isFailed ? Images.failedImg : Images.successImg} alt="" />
-            <div className="input-text">
-              {
-                isFailed
-                ?
-                  <Text
-                    styling={
-                      FontStyles.boldM
-                    }
-                    text={<span>You have failed to catch this pokemon.<br/> Try again?</span>}
-                    color={ Colors.black.default }
-                    className='text-label'
-                  />
-                :
-                <>
-                  <Text
-                    styling={
-                      FontStyles.boldM
-                    }
-                    text={'Nickname:'}
-                    color={ Colors.black.default }
-                    className='text-label'
-                  />
-                  <input
-                    type="text"
-                    value={nick}
-                    onChange={(e) => setNick(e.target.value)}
-                  />
-                  {
-                    errSameName &&
-                    <Text
-                      styling={
-                        FontStyles.boldS
-                      }
-                      text={'Nickname has been taken'}
-                      color={ Colors.red.default }
-                    />
-                  }
-                </>
-              }
-              <div
-                className={`btn-save ${isFailed ? 'failed' : ''}`}
-                onClick={() => {
-                  if(isFailed) {
-                    setOpenModal(false)
-                  } else {
-                    handleSave()
-                  }
-                }}
-              >
+              <div className="info-detail">
                 <Text
                   styling={
-                    FontStyles.boldM
+                    FontStyles.heading1
                   }
-                  text={isFailed ? 'Try' :'Save'}
-                  color={ Colors.white.default }
+                  text={'IVYSAUR'}
+                  color={ Colors.black.default }
                 />
+                {
+                  topNav === 0 &&
+                  dataType &&
+                  <Row
+                    text={'TYPE'}
+                    desc={dataType}
+                    className='customText'
+                    isType={true}
+                  />
+                }
+                <div className="text">
+                  {
+                    dataMain && dataMain.map((el, i) => {
+                      return (
+                        <Row
+                          key={i}
+                          text={el.text ?? ''}
+                          desc={el.desc ?? ''}
+                        />
+                      )
+                    })
+                  }
+                </div>
+              </div>
+            </ContentCardDetail>
+            <BtnCatch
+              onClick={() => setOpenModal(true)}
+            >
+              <Text
+                styling={
+                  FontStyles.heading3
+                }
+                text={'CATCH'}
+                color={ Colors.white.default }
+                onClick={() => handleCatch()}
+              />
+            </BtnCatch>
+          </DetailCard>
+        </div>
+
+        <CustomModal
+          isOpen={ openModal }
+          closeModal={ () => { setOpenModal(false) } }
+        >
+          <ModalInfo
+            isFailed={isFailed}
+          >
+            <img
+              className='xIcon'
+              src={ Images.x }
+              alt=''
+              onClick={ () => { setOpenModal(false)} }
+            />
+            <Text
+              styling={
+                FontStyles.heading1
+              }
+              text={isFailed ? 'FAILED' : 'SUCCESS'}
+              color={ isFailed ? Colors.red.default : Colors.green.default }
+              className='text-heading'
+            />
+            <div className="content-wrapper">
+              <img src={isFailed ? Images.failedImg : Images.successImg} alt="" />
+              <div className="input-text">
+                {
+                  isFailed
+                  ?
+                    <Text
+                      styling={
+                        FontStyles.boldM
+                      }
+                      text={<span>You have failed to catch this pokemon.<br/> Try again?</span>}
+                      color={ Colors.black.default }
+                      className='text-label'
+                    />
+                  :
+                  <>
+                    <Text
+                      styling={
+                        FontStyles.boldM
+                      }
+                      text={'Nickname:'}
+                      color={ Colors.black.default }
+                      className='text-label'
+                    />
+                    <input
+                      type="text"
+                      value={nick}
+                      onChange={(e) => setNick(e.target.value)}
+                    />
+                    {
+                      errSameName &&
+                      <Text
+                        styling={
+                          FontStyles.boldS
+                        }
+                        text={'Nickname has been taken'}
+                        color={ Colors.red.default }
+                      />
+                    }
+                  </>
+                }
+                <div
+                  className={`btn-save ${isFailed ? 'failed' : ''}`}
+                  onClick={() => {
+                    if(isFailed) {
+                      setOpenModal(false)
+                    } else {
+                      handleSave()
+                    }
+                  }}
+                >
+                  <Text
+                    styling={
+                      FontStyles.boldM
+                    }
+                    text={isFailed ? 'Try' :'Save'}
+                    color={ Colors.white.default }
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </ModalInfo>
-      </CustomModal>
-    </Container>
-  );
+          </ModalInfo>
+        </CustomModal>
+      </Container>
+    );
+
+  }
+
 
 };
 

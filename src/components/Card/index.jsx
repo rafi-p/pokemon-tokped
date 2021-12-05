@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom'
 import { Images, Colors, FontStyles } from '../../constant/index';
 import { Text } from '../../components/index';
+import { toast } from 'react-toastify';
 import {PokemonContext} from '../../context/PokemonContext'
 import {
   CardWrapper
@@ -19,6 +20,14 @@ const CardComponent = props => {
 
   const handleRelease = () => {
     pokemonContext.releasePokemon(props.nickname)
+    toast.success("Success Releasing Pokemon!", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+    });
   }
 
   return (
@@ -30,7 +39,7 @@ const CardComponent = props => {
         styling={
           FontStyles.heading2
         }
-        text={props.name}
+        text={props.loading ? '...' : props.name}
         color={ Colors.black.default }
         className='customText'
       />
