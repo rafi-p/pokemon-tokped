@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useQuery } from '@apollo/react-hooks'
 import {
   Text,
   CustomModal
 } from '../../components/index'
+import { useParams } from 'react-router-dom'
+import { toast } from 'react-toastify';
 import {
   Images,
   Colors,
@@ -17,47 +20,96 @@ import {
   BtnCatch,
   ModalInfo
 } from './style';
+import {GET_POKEMON_DETAIL} from '../../services/pokemon-detail'
+import { PokemonContext } from '../../context/PokemonContext'
 import { convert } from '../../helpers/index';
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile
+} from 'react-device-detect';
 
 const Detail = props => {
+  const param = useParams()
+  const pokemonContext = useContext(PokemonContext)
   const [isFailed, setIsFailed] = useState(false)
   const [topNav, setTopNav] = useState(0)
   const [openModal, setOpenModal] = useState(false)
+  const [errSameName, setErrSameName] = useState(false)
+  const { loading, error, data } = useQuery(GET_POKEMON_DETAIL, {
+    variables: { name: param.name },
+  })
   const [dataMain, setDataMain] = useState([])
+  const [dataType, setDataType] = useState('')
+  const [dataImage, setDataImage] = useState({})
+  const [nick, setNick] = useState('')
 
   const Row = (props) => {
-    const {text, desc} = props
+    const {text, desc, className, isType} = props
     return (
-      <RowContainer>
-        <Text
-          styling={
-            FontStyles.boldM
-          }
-          text={text}
-          color={ Colors.black.default }
-        />
-        <Text
-          styling={
-            FontStyles.mediumM
-          }
-          text={`: ${desc}`}
-          color={ Colors.black.default }
-        />
+      <RowContainer
+        className={className ?? ''}
+      >
+        {
+          isMobile && isType
+          ?
+            <>
+            </>
+          :
+            <Text
+              styling={
+                FontStyles.boldM
+              }
+              text={(!desc ? '- ' : '') + text}
+              color={ Colors.black.default }
+            />
+        }
+        {
+          desc &&
+          <Text
+            styling={
+              FontStyles.mediumM
+            }
+            text={`${isType ? '' : ': '}${desc}`}
+            color={ Colors.black.default }
+            className={`${isType ? 'customDesc' : ''}`}
+          />
+        }
       </RowContainer>
     )
   }
 
   useEffect(() => {
-    let data = []
-    if(topNav === 0) {
-      data = [1,2,3,4,5,6,7]
-    } else if(topNav === 1) {
-      data = [1,2,3]
-    } else {
-      data =[1,2]
+    let temp = []
+    let type = {}
+    let image = {}
+    if(data && data.pokemon && Object.keys(data.pokemon).length !== 0) {
+      image = data.pokemon.sprites
+      if(topNav === 0) {
+        temp = data.pokemon.stats.map((el, i) => {
+          return {
+            text: el.stat.name.toUpperCase(),
+            desc: el.base_stat
+          }
+        })
+        type = data.pokemon.types.map((el) => {
+          return el.type.name
+        }).join(', ')
+      } else if(topNav === 1) {
+        temp = data.pokemon.moves.map((el, i) => {
+          return {
+            text: el.move.name.toUpperCase(),
+          }
+        })
+      } else {
+        temp =[1,2]
+      }
     }
-    setDataMain(data)
-  }, [topNav])
+    setDataMain(temp)
+    setDataType(type)
+    setDataImage(image)
+  }, [topNav, data, loading])
 
   const topNavData = [
     {
@@ -68,13 +120,62 @@ const Detail = props => {
     }
   ]
 
+  const handleCatch = () => {
+    pokemonContext.catchPokemon()
+    .then (res => {
+      setIsFailed(!res)
+    })
+  }
+
+  useEffect(() => {
+    setErrSameName(false)
+  }, [nick])
+
+  const handleSave = () => {
+    let payload = {
+      id: data.pokemon.id,
+      name: data.pokemon.name,
+      nickname: nick,
+    }
+    pokemonContext.savePokemon(payload)
+    .then (res => {
+      if(res) {
+        pokemonContext.setMyPokemon((prevState) => ({
+          ...prevState,
+          catchedPokemon: [...prevState.catchedPokemon, payload]
+        }))
+        toast.success("Success Adding Pokemon!", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+        });
+        setOpenModal(false)
+        setNick('')
+      } else {
+        setErrSameName(true)
+      }
+    })
+    .catch((err) => {
+
+    })
+  }
+
   return (
     <Container>
       <div className="content-wrapper">
         <DetailCard>
           <div className="wrapper-image">
-            <img src={Images.pokemonLogo} alt="" />
-            <img src={Images.pokemonLogo} alt="" />
+            {
+              dataImage && Object.keys(dataImage) !== 0 &&
+              <>
+                <img src={dataImage.front_default} alt="" />
+                <img src={dataImage.back_default} alt="" />
+              </>
+            }
+
           </div>
           <ContentCardDetail>
             <div className="top-nav">
@@ -107,13 +208,24 @@ const Detail = props => {
                 text={'IVYSAUR'}
                 color={ Colors.black.default }
               />
+              {
+                topNav === 0 &&
+                dataType &&
+                <Row
+                  text={'TYPE'}
+                  desc={dataType}
+                  className='customText'
+                  isType={true}
+                />
+              }
               <div className="text">
                 {
                   dataMain && dataMain.map((el, i) => {
                     return (
                       <Row
-                        text='IVYSAUR'
-                        desc='80'
+                        key={i}
+                        text={el.text ?? ''}
+                        desc={el.desc ?? ''}
                       />
                     )
                   })
@@ -130,6 +242,7 @@ const Detail = props => {
               }
               text={'CATCH'}
               color={ Colors.white.default }
+              onClick={() => handleCatch()}
             />
           </BtnCatch>
         </DetailCard>
@@ -180,10 +293,33 @@ const Detail = props => {
                     color={ Colors.black.default }
                     className='text-label'
                   />
-                  <input type="text" />
+                  <input
+                    type="text"
+                    value={nick}
+                    onChange={(e) => setNick(e.target.value)}
+                  />
+                  {
+                    errSameName &&
+                    <Text
+                      styling={
+                        FontStyles.boldS
+                      }
+                      text={'Nickname has been taken'}
+                      color={ Colors.red.default }
+                    />
+                  }
                 </>
               }
-              <div className={`btn-save ${isFailed ? 'failed' : ''}`}>
+              <div
+                className={`btn-save ${isFailed ? 'failed' : ''}`}
+                onClick={() => {
+                  if(isFailed) {
+                    setOpenModal(false)
+                  } else {
+                    handleSave()
+                  }
+                }}
+              >
                 <Text
                   styling={
                     FontStyles.boldM

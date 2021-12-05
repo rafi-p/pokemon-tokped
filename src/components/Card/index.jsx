@@ -18,7 +18,7 @@ const CardComponent = props => {
 
   return (
     <CardWrapper
-      onClick={() => {history.push('/detail')}}
+      onClick={() => {history.push(`/detail/${props.name.toLowerCase()}`)}}
       isMyPokemon={props.myPokemon }
     >
       <Text

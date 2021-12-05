@@ -13,7 +13,7 @@ let publicRoutes =  [
       component: Dashboard,
     },
     {
-      path: '/detail',
+      path: '/detail/:name',
       component: Detail,
     },
     {

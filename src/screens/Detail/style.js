@@ -26,7 +26,7 @@ const DetailCard = styled.div`
     width: 100%;
     padding: 20px;
     display: flex;
-    height: calc(100vh - 410px);
+    height: 100%;;
     position: relative;
 
     @media ${Sizes.sm} {
@@ -52,15 +52,8 @@ const DetailCard = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: center;
-        & > * {
-            margin-bottom: 20px;
-
-            &:last-child {
-                margin-bottom: 0px;
-            }
-        }
         img {
-            width: 200px;
+            width: 150px;
         }
     }
 `;
@@ -117,6 +110,8 @@ const ContentCardDetail = styled.div`
         grid-template-columns: auto auto;
         grid-gap: 10px 70px;
         width: calc(100% - 100px);
+        max-height: 150px;
+        overflow-y: auto;
         @media ${Sizes.sm} {
             grid-template-columns: auto;
             justify-content: center;
@@ -130,6 +125,28 @@ const RowContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 100%;
+
+    &.customText {
+        justify-content: flex-start;
+        & > * {
+            margin-right: 15px;
+
+            &:last-child {
+                margin-right: 0px;
+            }
+        }
+        .customDesc {
+            font-style: italic;
+            color: ${Colors.yellow.default};
+            font-weight: 700
+        }
+
+        @media ${Sizes.sm} {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
     @media ${Sizes.sm} {
         width: calc(100vw - 200px);
     }
