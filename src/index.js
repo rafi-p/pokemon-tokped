@@ -2,10 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import PokemonContext from './context/PokemonContext'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <PokemonContext>
+      <App />
+    </PokemonContext>
   </React.StrictMode>,
   document.getElementById('root')
 );

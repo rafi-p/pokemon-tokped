@@ -35,7 +35,7 @@ const CardWrapper = styled.div`
     }
 
     .container-img {
-        background: red;
+        background: ${Colors.red.mild};
         height: 200px;
         width: 100%;
         display: flex;

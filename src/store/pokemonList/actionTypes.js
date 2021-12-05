@@ -1,3 +1,0 @@
-export default {
-  GET_POKEMON_SUCCESS: 'GET_POKEMON_SUCCESS',
-};

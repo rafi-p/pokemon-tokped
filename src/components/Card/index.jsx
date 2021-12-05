@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom'
 import { Images, Colors, FontStyles } from '../../constant/index';
 import { Text } from '../../components/index';
+import {PokemonContext} from '../../context/PokemonContext'
 import {
   CardWrapper
 } from './style';
@@ -9,6 +10,11 @@ import {
 
 const CardComponent = props => {
   const history = useHistory()
+  const pokemonContext = useContext(PokemonContext)
+
+  const ownedPokemon = () => {
+    return pokemonContext.myPokemon.catchedPokemon.filter(el => el.name === props.name).length
+  }
 
   return (
     <CardWrapper
@@ -35,7 +41,7 @@ const CardComponent = props => {
         />
       }
       <div className="container-img">
-        <img src={Images.pokemonLogo} alt="" />
+        <img src={props.image} alt="" />
       </div>
       {
         !props.myPokemon &&
@@ -43,7 +49,7 @@ const CardComponent = props => {
           styling={
             FontStyles.mediumL
           }
-          text={`Owned: ${props.counted}`}
+          text={`Owned: ${ownedPokemon()}`}
           color={ Colors.black.default }
         />
       }
@@ -53,7 +59,6 @@ const CardComponent = props => {
             className="container-btn"
             onClick={(e) => {
               e.stopPropagation();
-              // alert('click release')
             }}
           >
             <Text

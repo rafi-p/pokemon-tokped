@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useQuery } from '@apollo/react-hooks'
+import { useParams } from 'react-router-dom'
 import {
   Card
 } from '../../components/index'
@@ -10,10 +11,28 @@ import {
   Container
 } from './style';
 import { convert } from '../../helpers/index';
-import * as pokemonListAction from '../../store/pokemonList/actions';
+import { GET_POKEMONS_LIST } from '../../services/pokemons-list'
 
 const Dashboard = props => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const param = useParams()
+  const limit = 12
+  const [offset, setOffset] = useState(0)
+  const [page, setPage] = useState(1)
+  const { loading, error, data } = useQuery(GET_POKEMONS_LIST, {
+    variables: { limit, offset },
+  })
+
+  const nextPage = () => {
+    setPage((prevState) => prevState + 1)
+    setOffset((prevState) => prevState + limit)
+  }
+
+  const prevPage = () => {
+    setPage((prevState) => prevState - 1)
+    setOffset((prevState) => prevState - limit)
+  }
+
   const [dataMain, setDataMain] = useState(
     [
       {
@@ -30,12 +49,14 @@ const Dashboard = props => {
     <Container>
       <div className="content-wrapper">
         {
-          dataMain && dataMain.map((el, i) => {
+          !loading &&
+          data.pokemons.results.map((el, i) => {
             return (
               <Card
-                key={i}
-                name={el.name}
+                key={el.id}
+                name={el.name.toUpperCase()}
                 counted={el.counted}
+                image={el.image}
               />
             )
           })
@@ -47,16 +68,16 @@ const Dashboard = props => {
           src={ Images.arrowPageLeft }
           alt=''
           className={ `clicked` }
-          onClick={ () => { } }
+          onClick={() => prevPage() }
         />
         <div>
-          1
+          {page}
         </div>
         <img
           src={ Images.arrowPageRight }
           alt=''
           className={ `clicked` }
-          onClick={ () => { } }
+          onClick={ () => nextPage()}
         />
       </div>
     </Container>

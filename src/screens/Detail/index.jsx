@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import {
   Text,
   CustomModal
@@ -19,10 +18,8 @@ import {
   ModalInfo
 } from './style';
 import { convert } from '../../helpers/index';
-import * as pokemonListAction from '../../store/pokemonList/actions';
 
 const Detail = props => {
-  const dispatch = useDispatch();
   const [isFailed, setIsFailed] = useState(false)
   const [topNav, setTopNav] = useState(0)
   const [openModal, setOpenModal] = useState(false)

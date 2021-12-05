@@ -1,25 +1,24 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { BrowserRouter} from 'react-router-dom';
+import { ApolloProvider } from '@apollo/react-hooks'
 import Router from './router/index';
-import {history, store } from './store/index';
 import {Navbar} from './components/index'
-import { GlobalStyles } from './constant';
+import { GlobalStyles, client } from './constant';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
-    <Provider store={store}>
+    <ApolloProvider client={client}>
       <BrowserRouter>
-        <GlobalStyles />
-        <div className={'main-container'}>
-          <Navbar/>
-          <Router history={ history } />
-          <ToastContainer/>
-        </div>
+          <GlobalStyles />
+          <div className={'main-container'}>
+            <Navbar/>
+            <Router/>
+            <ToastContainer/>
+          </div>
       </BrowserRouter>
-    </Provider>
+    </ApolloProvider>
   );
 }
 

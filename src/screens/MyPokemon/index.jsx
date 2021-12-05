@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import {
   Card
 } from '../../components/index'
@@ -10,10 +9,8 @@ import {
   Container
 } from './style';
 import { convert } from '../../helpers/index';
-import * as pokemonListAction from '../../store/pokemonList/actions';
 
 const Dashboard = props => {
-  const dispatch = useDispatch();
   const [dataMain, setDataMain] = useState(
     [
       {
