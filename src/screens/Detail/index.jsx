@@ -135,13 +135,13 @@ const Detail = props => {
     let payload = {
       id: data.pokemon.id,
       name: data.pokemon.name,
+      image: data.pokemon.sprites.front_default,
       nickname: nick,
     }
     pokemonContext.savePokemon(payload)
     .then (res => {
       if(res) {
         pokemonContext.setMyPokemon((prevState) => ({
-          ...prevState,
           catchedPokemon: [...prevState.catchedPokemon, payload]
         }))
         toast.success("Success Adding Pokemon!", {

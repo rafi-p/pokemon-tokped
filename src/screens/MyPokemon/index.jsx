@@ -1,35 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
-  Card
+  Card,
+  Text
 } from '../../components/index'
 import {
-  Images
+  Images,
+  FontStyles,
+  Colors
 } from '../../constant/index'
 import {
-  Container
+  Container,
+  Nothing
 } from './style';
-import { convert } from '../../helpers/index';
+import {PokemonContext} from '../../context/PokemonContext'
+import { convert, LocalStorage } from '../../helpers/index';
 
-const Dashboard = props => {
-  const [dataMain, setDataMain] = useState(
-    [
-      {
-        name: 'IVYSAUR',
-        counted: 0,
-        nickname: 'tes'
-      },
-      {
-        name: 'Lalalal',
-        counted: 0,
-        nickname: 'dsadsad'
-      },
-      {
-        name: 'dsadsad',
-        counted: 0,
-        nickname: 'dsadsads'
-      }
-    ]
-  )
+const MyPokemon = props => {
+  const pokemonContext = useContext(PokemonContext)
+  const [dataMain, setDataMain] = useState([])
+
+  useEffect(() => {
+    setDataMain(pokemonContext.myPokemon.catchedPokemon)
+  }, [pokemonContext.myPokemon])
+
   return (
     <Container>
       <div className="content-wrapper">
@@ -37,14 +30,29 @@ const Dashboard = props => {
           dataMain && dataMain.map((el, i) => {
             return (
               <Card
-                key={i}
-                name={el.name}
-                counted={el.counted}
+                key={el.id}
+                name={el.name.toUpperCase()}
+                image={el.image}
                 nickname={el.nickname}
                 myPokemon={true}
               />
             )
           })
+        }
+        {
+          dataMain.length === 0 &&
+          <Nothing>
+            <div className="image-wrapper">
+              <img src={Images.pokeball} alt="" />
+            </div>
+            <Text
+              styling={
+                FontStyles.heading3
+              }
+              text={`Go catch some pokemon!`}
+              color={ Colors.black.default }
+            />
+          </Nothing>
         }
 
       </div>
@@ -53,4 +61,4 @@ const Dashboard = props => {
 
 };
 
-export default Dashboard;
+export default MyPokemon;

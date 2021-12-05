@@ -8,7 +8,7 @@ const CardWrapper = styled.div`
     border: 5px solid ${Colors.black.default};
     padding: 20px;
     border-radius: 20px;
-    height: 300px;
+    height: ${props => (props.isMyPokemon ? '100%' : '300px')};
     width: 200px;
     box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.08);
     cursor: pointer;

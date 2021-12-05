@@ -23,8 +23,14 @@ const PokemonContextProvider = ({ children }) => {
     })
   }
 
+  const releasePokemon = (nickname) => {
+    setMyPokemon((prevState) => ({
+      catchedPokemon: myPokemon.catchedPokemon.filter((x) => x.nickname !== nickname),
+    }))
+  }
+
   useEffect(() => {
-    LocalStorage.setMyPokemon(myPokemon)
+    LocalStorage.setMyPokemon(myPokemon.catchedPokemon)
   }, [myPokemon])
 
   return (
@@ -33,7 +39,8 @@ const PokemonContextProvider = ({ children }) => {
         myPokemon,
         setMyPokemon,
         catchPokemon,
-        savePokemon
+        savePokemon,
+        releasePokemon
       }}
       >
       {children}

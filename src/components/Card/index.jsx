@@ -13,7 +13,12 @@ const CardComponent = props => {
   const pokemonContext = useContext(PokemonContext)
 
   const ownedPokemon = () => {
-    return pokemonContext.myPokemon.catchedPokemon.filter(el => el.name === props.name).length
+      return pokemonContext.myPokemon.catchedPokemon.filter(el => el.name.toLowerCase() === props.name.toLowerCase()).length
+
+  }
+
+  const handleRelease = () => {
+    pokemonContext.releasePokemon(props.nickname)
   }
 
   return (
@@ -43,22 +48,22 @@ const CardComponent = props => {
       <div className="container-img">
         <img src={props.image} alt="" />
       </div>
-      {
-        !props.myPokemon &&
         <Text
           styling={
             FontStyles.mediumL
           }
-          text={`Owned: ${ownedPokemon()}`}
+          text={`Owned: ${
+            ownedPokemon()
+          }`}
           color={ Colors.black.default }
         />
-      }
       {
         props.myPokemon &&
           <div
             className="container-btn"
             onClick={(e) => {
               e.stopPropagation();
+              handleRelease()
             }}
           >
             <Text

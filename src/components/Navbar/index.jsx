@@ -14,6 +14,13 @@ import {
 
 const NavbarComponent = props => {
   const history = useHistory()
+  const { pathname } = useLocation();
+
+  const isActive = (path) => {
+    if(path === pathname) {
+      return true
+    }
+  }
 
   return (
     <Navbar>
@@ -24,7 +31,7 @@ const NavbarComponent = props => {
         <img src={Images.pokemonLogo} alt="" />
       </div>
       <div
-        className="container-btn"
+        className={`container-btn ${isActive('/my-pokemon') ? 'active' : ''}`}
         onClick={() => {history.push('/my-pokemon')}}
       >
         <Text

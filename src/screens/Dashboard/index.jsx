@@ -55,7 +55,6 @@ const Dashboard = props => {
               <Card
                 key={el.id}
                 name={el.name.toUpperCase()}
-                counted={el.counted}
                 image={el.image}
               />
             )

@@ -21,6 +21,7 @@ export default {
 		bright: '#2D9CDB',
 		mild: '#EAF5FB',
 		light: '#D1F5FD',
+		out: '#2d4494'
 	},
 	yellow: {
 		default: '#B9A511',

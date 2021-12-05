@@ -50,9 +50,15 @@ const Navbar = styled.div`
         border-radius: 10px;
         cursor: pointer;
         transition: all .3s;
+        border: 1px solid ${Colors.yellow.default};
         &:hover {
             /* transform: scale(1.05); */
             box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.08);
+        }
+
+        &.active {
+            box-shadow: 0px 2px 10px 5px rgba(255, 255, 255, 0.25);
+            border: 1px solid ${Colors.white.default};
         }
     }
 `;

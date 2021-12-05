@@ -51,6 +51,37 @@ const Container = styled.div`
     }
 `;
 
+const Nothing = styled.div`
+    margin-right: unset !important;
+    margin-bottom: unset !important;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+    .image-wrapper {
+        width: 200px;
+        height: 200px;
+        margin-bottom: 10px;
+        display: flex;
+        align-self: center;
+        justify-content: center;
+    }
+    img {
+        width: 100%;
+        height: auto;
+    }
+    text-align: center;
+
+    @media ${Sizes.sm} {
+        height: calc(100vh - 155px);
+        .image-wrapper {
+            width: 100px;
+            height: 100px;
+        }
+    }
+`;
+
 export {
     Container,
+    Nothing
 };
