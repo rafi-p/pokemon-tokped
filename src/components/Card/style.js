@@ -25,6 +25,9 @@ const CardWrapper = styled.div`
 
     & > * {
         margin-bottom: 15px;
+        &:first-child {
+            margin-bottom: ${props => (props.isMyPokemon ? 'unset' : '15px')};
+        }
 
         &:last-child {
             margin-bottom: 0px;
@@ -42,6 +45,18 @@ const CardWrapper = styled.div`
 
         img {
             width: 100%;
+        }
+    }
+
+    .container-btn {
+        background: ${Colors.red.default};
+        padding: 10px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all .3s;
+        &:hover {
+            /* transform: scale(1.05); */
+            box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.08);
         }
     }
 

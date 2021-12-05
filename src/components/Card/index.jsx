@@ -13,25 +13,59 @@ const CardComponent = props => {
   return (
     <CardWrapper
       onClick={() => {history.push('/detail')}}
+      isMyPokemon={props.myPokemon }
     >
       <Text
         styling={
           FontStyles.heading2
         }
-        text='Bullbasaur'
+        text={props.name}
         color={ Colors.black.default }
         className='customText'
       />
+      {
+        props.myPokemon &&
+        <Text
+          styling={
+            FontStyles.mediumM
+          }
+          text={props.nickname}
+          color={ Colors.black.default }
+          className='customText'
+        />
+      }
       <div className="container-img">
         <img src={Images.pokemonLogo} alt="" />
       </div>
-      <Text
-        styling={
-          FontStyles.mediumL
-        }
-        text={'Counted: 0'}
-        color={ Colors.black.default }
-      />
+      {
+        !props.myPokemon &&
+        <Text
+          styling={
+            FontStyles.mediumL
+          }
+          text={`Owned: ${props.counted}`}
+          color={ Colors.black.default }
+        />
+      }
+      {
+        props.myPokemon &&
+          <div
+            className="container-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              // alert('click release')
+            }}
+          >
+            <Text
+              styling={
+                FontStyles.mediumS
+              }
+              text='Release'
+              color={ Colors.white.default }
+            />
+          </div>
+      }
+
     </CardWrapper>
   );
 };

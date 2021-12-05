@@ -18,11 +18,18 @@ const Dashboard = props => {
     [
       {
         name: 'IVYSAUR',
-        counted: 0
+        counted: 0,
+        nickname: 'tes'
       },
       {
         name: 'Lalalal',
-        counted: 0
+        counted: 0,
+        nickname: 'dsadsad'
+      },
+      {
+        name: 'dsadsad',
+        counted: 0,
+        nickname: 'dsadsads'
       }
     ]
   )
@@ -36,28 +43,13 @@ const Dashboard = props => {
                 key={i}
                 name={el.name}
                 counted={el.counted}
+                nickname={el.nickname}
+                myPokemon={true}
               />
             )
           })
         }
 
-      </div>
-      <div className="pagination">
-        <img
-          src={ Images.arrowPageLeft }
-          alt=''
-          className={ `clicked` }
-          onClick={ () => { } }
-        />
-        <div>
-          1
-        </div>
-        <img
-          src={ Images.arrowPageRight }
-          alt=''
-          className={ `clicked` }
-          onClick={ () => { } }
-        />
       </div>
     </Container>
   );

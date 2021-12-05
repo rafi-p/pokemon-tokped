@@ -3,7 +3,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import {
   Dashboard,
-  Detail
+  Detail,
+  MyPokemon
 } from '../screens';
 
 let publicRoutes =  [
@@ -14,6 +15,10 @@ let publicRoutes =  [
     {
       path: '/detail',
       component: Detail,
+    },
+    {
+      path: '/my-pokemon',
+      component: MyPokemon,
     },
   ]
 

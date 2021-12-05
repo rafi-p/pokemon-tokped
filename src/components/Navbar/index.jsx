@@ -23,7 +23,10 @@ const NavbarComponent = props => {
       >
         <img src={Images.pokemonLogo} alt="" />
       </div>
-      <div className="container-btn">
+      <div
+        className="container-btn"
+        onClick={() => {history.push('/my-pokemon')}}
+      >
         <Text
           styling={
             isMobile
