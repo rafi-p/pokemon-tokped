@@ -45,6 +45,12 @@ const Detail = props => {
   const [dataImage, setDataImage] = useState({})
   const [nick, setNick] = useState('')
 
+  useEffect(() => {
+    if(!loading && data.pokemon.id === null) {
+      props.history.push('/not-found')
+    }
+  }, [loading, data])
+
   const Row = (props) => {
     const {text, desc, className, isType} = props
     return (
@@ -84,7 +90,7 @@ const Detail = props => {
     let temp = []
     let type = ''
     let image = {}
-    if(!loading) {
+    if(!loading  && data.pokemon.id !== null) {
       image = data.pokemon.sprites
       if(topNav === 0) {
         temp = data.pokemon.stats.map((el, i) => {

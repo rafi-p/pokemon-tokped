@@ -11,4 +11,5 @@ export default {
 	successImg: require('../assets/images/successImg.png').default,
 	pokeball: require('../assets/images/pokeball.png').default,
 	failedImg: require('../assets/images/failedImg.png').default,
+	notFound: require('../assets/images/notFound2.png').default,
 };

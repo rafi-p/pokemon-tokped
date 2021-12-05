@@ -62,6 +62,10 @@ const CardComponent = props => {
             FontStyles.mediumL
           }
           text={`Owned: ${
+            props.loading
+            ?
+            '..'
+            :
             ownedPokemon()
           }`}
           color={ Colors.black.default }

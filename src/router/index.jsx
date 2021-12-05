@@ -4,7 +4,8 @@ import { ConnectedRouter } from 'connected-react-router';
 import {
   Dashboard,
   Detail,
-  MyPokemon
+  MyPokemon,
+  NotFound
 } from '../screens';
 
 let publicRoutes =  [
@@ -19,6 +20,10 @@ let publicRoutes =  [
     {
       path: '/my-pokemon',
       component: MyPokemon,
+    },
+    {
+      path: '/not-found',
+      component: NotFound,
     },
   ]
 
@@ -35,7 +40,7 @@ const Router = props => {
           />
         )
       }
-      {/* <Redirect to={ '/' }/> */}
+      <Redirect to={ '/not-found' }/>
     </Switch>
   );
 };
