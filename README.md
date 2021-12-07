@@ -16,4 +16,7 @@ The app will automatically opened in your browser.
 
 ## Features
 
-*
+* List of all pokemon
+* Detail each pokemon with their info and skill
+* Can catch pokemon
+* List of all pokemon that user has been catched
